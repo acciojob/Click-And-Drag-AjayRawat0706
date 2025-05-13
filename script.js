@@ -1,29 +1,30 @@
-const container = document.querySelector('.items');
-let isDown = false;
-let startX;
-let scrollLeft;
+// Your code here.
+const cubes = document.querySelectorAll('.item');
 
-container.addEventListener('mousedown', (e) => {
-  isDown = true;
-  container.classList.add('active');
-  startX = e.pageX - container.offsetLeft;
-  scrollLeft = container.scrollLeft;
-});
+cubes.forEach((cube) => {
+    cube.addEventListener("mousedown", (e) => {
+        // Set the draggable attribute
+        cube.setAttribute('draggable', true);
 
-container.addEventListener('mouseleave', () => {
-  isDown = false;
-  container.classList.remove('active');
-});
+        // Save the initial position
+        const offsetX = e.clientX - cube.getBoundingClientRect().left;
+        const offsetY = e.clientY - cube.getBoundingClientRect().top;
 
-container.addEventListener('mouseup', () => {
-  isDown = false;
-  container.classList.remove('active');
-});
+        const mouseMoveHandler = (e) => {
+            // Update the cube's position
+            cube.style.position = 'absolute';
+            cube.style.left = (e.clientX - offsetX) + 'px';
+            cube.style.top = (e.clientY - offsetY) + 'px';
+        };
 
-container.addEventListener('mousemove', (e) => {
-  if (!isDown) return;
-  e.preventDefault();
-  const x = e.pageX - container.offsetLeft;
-  const walk = (x - startX) * 1.5; // Adjust scroll speed
-  container.scrollLeft = scrollLeft - walk;
+        const mouseUpHandler = () => {
+            // Remove the event listeners when mouse is released
+            document.removeEventListener("mousemove", mouseMoveHandler);
+            document.removeEventListener("mouseup", mouseUpHandler);
+        };
+
+        // Add mousemove and mouseup event listeners
+        document.addEventListener("mousemove", mouseMoveHandler);
+        document.addEventListener("mouseup", mouseUpHandler);
+    });
 });
