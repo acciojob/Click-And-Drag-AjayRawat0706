@@ -3,107 +3,38 @@
 <head>
   <meta charset="UTF-8">
   <title>Click and Drag</title>
-  <style>
-    .items {
-      width: 500px;
-      height: 500px;
-      position: relative;
-      border: 2px solid #000;
-      margin: 20px auto;
-      overflow: hidden;
-    }
-    .item {
-      width: 60px;
-      height: 60px;
-      background: lightblue;
-      position: absolute;
-      cursor: grab;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      user-select: none;
-      z-index: 1;
-      transition: none;
-    }
-    .item.active {
-      cursor: grabbing;
-      opacity: 0.7;
-      z-index: 1000;
-    }
-  </style>
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <div class="items" id="container">
-    <!-- Items will be generated dynamically -->
+  <div class="items">
+    <div class="item item1">01</div>
+    <div class="item item2">02</div>
+    <div class="item item3">03</div>
+    <div class="item item4">04</div>
+    <div class="item item5">05</div>
+    <div class="item item6">06</div>
+    <div class="item item7">07</div>
+    <div class="item item8">08</div>
+    <div class="item item9">09</div>
+    <div class="item item10">10</div>
+    <div class="item item11">11</div>
+    <div class="item item12">12</div>
+    <div class="item item13">13</div>
+    <div class="item item14">14</div>
+    <div class="item item15">15</div>
+    <div class="item item16">16</div>
+    <div class="item item17">17</div>
+    <div class="item item18">18</div>
+    <div class="item item19">19</div>
+    <div classThe cube should not move outside the defined area.
+="item item20">20</div>
+    <div class="item item21">21</div>
+    <div class="item item22">22</div>
+    <div class="item item23">23</div>
+    <div class="item item24">24</div>
+    <div class="item item25">25</div>
   </div>
-  
-  <script>
-    const container = document.getElementById('container');
-    const itemSize = 60; // Width and height of each item
-    const gap = 10;      // Gap between items
-    const totalItems = 25; // Total number of items
-    // Calculate how many items can fit per row in the container
-    const itemsPerRow = Math.floor((container.clientWidth + gap) / (itemSize + gap));
 
-    // Generate items arranged in a grid formation
-    for (let i = 0; i < totalItems; i++) {
-      const item = document.createElement('div');
-      item.className = 'item';
-      item.textContent = i + 1;
-      const col = i % itemsPerRow;
-      const row = Math.floor(i / itemsPerRow);
-      const left = col * (itemSize + gap);
-      const top = row * (itemSize + gap);
-      item.style.left = left + 'px';
-      item.style.top = top + 'px';
-      container.appendChild(item);
-    }
-
-    let isDragging = false;
-    let currentItem = null;
-    let offsetX = 0, offsetY = 0;
-
-    // Attach mousedown event listener to each item for dragging
-    const items = document.querySelectorAll('.item');
-    items.forEach(item => {
-      item.addEventListener('mousedown', (e) => {
-        isDragging = true;
-        currentItem = item;
-        currentItem.classList.add('active');
-        const rect = currentItem.getBoundingClientRect();
-        offsetX = e.clientX - rect.left;
-        offsetY = e.clientY - rect.top;
-      });
-    });
-
-    // Update item position on mousemove
-    document.addEventListener('mousemove', (e) => {
-      if (!isDragging || !currentItem) return;
-      e.preventDefault();
-      const containerRect = container.getBoundingClientRect();
-      let newLeft = e.clientX - containerRect.left - offsetX;
-      let newTop = e.clientY - containerRect.top - offsetY;
-
-      // Enforce boundary constraints
-      if (newLeft < 0) newLeft = 0;
-      if (newTop < 0) newTop = 0;
-      const maxLeft = container.clientWidth - currentItem.offsetWidth;
-      const maxTop = container.clientHeight - currentItem.offsetHeight;
-      if (newLeft > maxLeft) newLeft = maxLeft;
-      if (newTop > maxTop) newTop = maxTop;
-
-      currentItem.style.left = newLeft + 'px';
-      currentItem.style.top = newTop + 'px';
-    });
-
-    // Drop the item on mouseup
-    document.addEventListener('mouseup', () => {
-      if (isDragging && currentItem) {
-        isDragging = false;
-        currentItem.classList.remove('active');
-        currentItem = null;
-      }
-    });
-  </script>
+  <script src="script.js"></script>
 </body>
 </html>
